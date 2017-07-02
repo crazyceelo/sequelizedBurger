@@ -8,6 +8,8 @@ var path = require("path");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+var db = require("./models");
+
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(process.cwd() + "/public"));
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -25,4 +27,8 @@ var routes = require("./controllers/burgers_controller.js");
 
 app.use("/", routes);
 
-app.listen(PORT);
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
+});
