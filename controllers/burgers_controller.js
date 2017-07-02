@@ -17,31 +17,37 @@ router.get("/", function(req, res){
 });
 
 router.post("/", function(req, res){
+    // console.log(req.body.name);
     db.Burger.create({
-        burgerName: req.params.burgerName,
-        devoured: req.params.devoured
-    }).then(function(data){
+        burgerName: req.body.name,
+        devoured: req.body.devoured
+    }).then(function(){
         res.redirect("/");
-    })
-    // burger.create([
-    //     "burgerName", "devoured"
-    // ], [
-    //     req.body.name, req.body.devoured
-    // ], function(){
-        // res.redirect("/");
-    // });
+    });
 });
 
 router.put("/:id", function(req, res){
-    var condition = "id = " + req.params.id;
+    var condition = req.params.id;
 
-    // console.log("condition", condition);
-
-    burger.update({
+    db.Burger.update({
         devoured: req.body.devoured
-    }, condition, function(){
+    }, {
+        where: {
+            id: condition
+        }
+    }).then(function(){
         res.redirect("/");
     })
+    
+    // var condition = "id = " + req.params.id;
+
+    // // console.log("condition", condition);
+
+    // burger.update({
+    //     devoured: req.body.devoured
+    // }, condition, function(){
+    //     res.redirect("/");
+    // })
 });
 
 router.delete("/:id", function(req, res){
