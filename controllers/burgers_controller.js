@@ -38,26 +38,25 @@ router.put("/:id", function(req, res){
     }).then(function(){
         res.redirect("/");
     })
-    
-    // var condition = "id = " + req.params.id;
-
-    // // console.log("condition", condition);
-
-    // burger.update({
-    //     devoured: req.body.devoured
-    // }, condition, function(){
-    //     res.redirect("/");
-    // })
 });
 
 router.delete("/:id", function(req, res){
-    var condition = "id = " + req.body.id;
-
-    console.log("condition", condition);
-
-    burger.delete(condition, function(){
+    db.Burger.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(function(){
         res.redirect("/");
-    });
+    })
+
+
+    // var condition = "id = " + req.body.id;
+
+    // console.log("condition", condition);
+
+    // burger.delete(condition, function(){
+    //     res.redirect("/");
+    // });
 });
 
 // export routes for server.js to use
